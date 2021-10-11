@@ -21,16 +21,27 @@ async def on_message(msg):
 
   if msg.author == bot.user:
     return
-  if msg.content.startswith("hi") or msg.content.startswith("Hi"):
-    await msg.channel.send("Hi, " + msg.author.name + "!")
+  if "hi" in msg.content.lower():
+    await msg.channel.send("Hi, {0}!".format(msg.author.name))
   elif msg.content.startswith("who"):
     await msg.channel.send("Who am I? I am mlh test bot")
     await msg.channel.send("https://news.mlh.io/wp-content/uploads/2017/07/bot_v2-08-296x300.png")
-  elif msg.content.startswith("bunny") or msg.content.startswith("兔子"):
+  elif "bunny" in msg.content.lower() or "兔子" in msg.content:
     await msg.channel.send(random.choice(bunny_list))
+  elif "python" in msg.content:
+    await msg.add_reaction("\U0001F40D")
+  elif "lol" in msg.content.lower():
+    await msg.add_reaction("\U0001F923")
   else:
     print(msg)
     await msg.channel.send("Why don't you greet me")
+
+@bot.event
+async def on_raw_reaction_add(payload):
+  if payload.emoji.name == "✅":
+    channel = discord.utils.get(bot.get_all_channels(), id=payload.channel_id)
+    user = payload.member
+    await channel.send("Nice job, {0}!".format(user.mention))
 
 # open flask app and call function to keep program running
 stay_awake()
