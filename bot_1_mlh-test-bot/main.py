@@ -21,7 +21,7 @@ async def on_message(msg):
 
   if msg.author == bot.user:
     return
-  if "hi" in msg.content.lower():
+  if msg.content.lower().startswith("hi"):
     await msg.channel.send("Hi, {0}!".format(msg.author.name))
   elif msg.content.startswith("who"):
     await msg.channel.send("Who am I? I am mlh test bot")
