@@ -3,7 +3,25 @@ import os
 import random
 from stay_awake import stay_awake
 
-bot = discord.Client()
+# intents = discord.Intents.default()
+intents = discord.Intents.all()
+intents.members=True
+# bot = discord.Client()
+bot = discord.Client(intents=intents)
+
+@bot.event
+async def on_member_join(member):
+  print('member joined')
+  channel_id = 850235699981844513 #753590323011256375
+  channel = bot.get_channel(channel_id)
+  
+  if not channel:
+      return
+
+  # await channel.send(f"Hi, {member.name}!")
+  embed=discord.Embed(title=f"Welcome {member.name}", description=f"Thanks for joining {member.guild.name}!") # F-Strings
+  embed.set_thumbnail(url=member.avatar_url) # Set the embed's thumbnail to the member's avatar image
+  await channel.send(embed=embed)
 
 bunny_list = [
   "https://soranews24.com/wp-content/uploads/sites/3/2014/07/anigif_enhanced-buzz-6846-1372172023-3.gif",
@@ -34,7 +52,7 @@ async def on_message(msg):
     await msg.add_reaction("\U0001F923")
   else:
     print(msg)
-    await msg.channel.send("Why don't you greet me")
+    # await msg.channel.send("Why don't you greet me")
 
 @bot.event
 async def on_raw_reaction_add(payload):
