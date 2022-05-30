@@ -26,7 +26,7 @@ async def on_member_join(member):
 bunny_list = [
   "https://soranews24.com/wp-content/uploads/sites/3/2014/07/anigif_enhanced-buzz-6846-1372172023-3.gif",
   "https://c.tenor.com/BI5IrlWrkTMAAAAd/bunny-too-cute.gif",
-  "https://c.tenor.com/9fOKcwHcGMkAAAAM/bluenathmade-blue-nath.gif"
+  "https://c.tenor.com/9fOKcwHcGMkAAAAM/bluenathmade-blue-nath.gif", "https://44.media.tumblr.com/74061f5bc168f012d5c4281176a97b28/tumblr_n5leqjUYea1qc4uvwo1_500.gif"
 ]
 
 @bot.event
@@ -42,26 +42,35 @@ async def on_message(msg):
     return
 
   pythonFile = False
+  javaFile = False
 
   if msg.attachments:
     attachment = msg.attachments[0].url
     print("received attachment: ", attachment)
     if attachment.endswith(".py"):
       pythonFile = True
-    
+    if attachment.endswith(".java"):
+      javaFile = True
+  
   if msg.content.lower().startswith("hi"):
-    await msg.channel.send("Hi, {0}!".format(msg.author.name))
+    # await msg.channel.send("Hi, {0}!".format(msg.author.name))
+    await msg.channel.send("Hi, {0}!".format(msg.author.mention))
   elif msg.content.startswith("who"):
     await msg.channel.send("Who am I? I am mlh test bot")
     await msg.channel.send("https://news.mlh.io/wp-content/uploads/2017/07/bot_v2-08-296x300.png")
   elif "bunny" in msg.content.lower() or "兔子" in msg.content:
     await msg.channel.send(random.choice(bunny_list))
   elif "python" in msg.content or pythonFile:
-    await msg.add_reaction("\U0001F40D")
+    await msg.add_reaction("🐍")
+  elif "java" in msg.content or javaFile:
+    await msg.add_reaction("☕")
   elif "lol" in msg.content.lower():
-    await msg.add_reaction("\U0001F923")
+    await msg.add_reaction("😄")
+  elif msg.channel.id == 857746001226235927 and msg.author.id == 638275704986796032: # React in gaming channel
+    await msg.add_reaction("💯")
   else:
-    print(msg)
+    pass
+    # print(msg)
     # await msg.channel.send("Why don't you greet me")
 
 @bot.event
@@ -76,3 +85,8 @@ async def on_raw_reaction_add(payload):
 stay_awake()
 # run the bot
 bot.run(os.getenv('TOKEN'))
+
+""" helpful links
+Emoji list:
+https://unicode.org/emoji/charts/full-emoji-list.html
+"""
