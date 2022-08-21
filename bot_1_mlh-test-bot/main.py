@@ -68,6 +68,8 @@ async def on_message(msg):
     await msg.add_reaction("😄")
   elif msg.channel.id == 857746001226235927 and msg.author.id == 638275704986796032: # React in gaming channel
     await msg.add_reaction("💯")
+  elif msg.channel.id == 1010750702336880690: # React in 2023 postings channel
+    await msg.add_reaction("✅")
   else:
     pass
     # print(msg)
@@ -75,7 +77,7 @@ async def on_message(msg):
 
 @bot.event
 async def on_raw_reaction_add(payload):
-  if payload.emoji.name == "✅":
+  if payload.emoji.name == "✅" and user.name != "mlh-test-bot":
     channel = discord.utils.get(bot.get_all_channels(), id=payload.channel_id)
     user = payload.member
     await channel.send("Nice job, {0}!".format(user.mention))
@@ -87,6 +89,9 @@ stay_awake()
 bot.run(os.getenv('TOKEN'))
 
 """ helpful links
+UptimeRobot:
+https://uptimerobot.com/dashboard#mainDashboard
+
 Emoji list:
 https://unicode.org/emoji/charts/full-emoji-list.html
 """
