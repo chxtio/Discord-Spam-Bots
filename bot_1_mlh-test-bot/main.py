@@ -77,9 +77,10 @@ async def on_message(msg):
 
 @bot.event
 async def on_raw_reaction_add(payload):
+  user = payload.member
   if payload.emoji.name == "✅" and user.name != "mlh-test-bot":
     channel = discord.utils.get(bot.get_all_channels(), id=payload.channel_id)
-    user = payload.member
+    # print(user.name)
     await channel.send("Nice job, {0}!".format(user.mention))
 
 
