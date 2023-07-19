@@ -96,7 +96,16 @@ async def on_raw_reaction_add(payload):
   if payload.emoji.name == "✅" and user.name != "mlh-test-bot":
     channel = discord.utils.get(bot.get_all_channels(), id=payload.channel_id)
     # print(user.name)
-    await channel.send("Nice job, {0}!".format(user.mention))
+    # Slow warn Vincent
+    if channel.id == 1077742468965093487 and user.id == 429463598629257227:
+      await channel.send(
+        f'¡Ay Dios mio {user.mention}! Slow down speedy Gonzalez!')
+      if random.randint(0, 1) == 1:
+        await channel.send(
+          "https://gifdb.com/images/high/speedy-gonzales-running-t0uvc86wu0vlqdwv.gif"
+        )
+    else:  # Encourage everyone else
+      await channel.send("Nice job, {0}!".format(user.mention))
 
 
 # open flask app and call function to keep program running
