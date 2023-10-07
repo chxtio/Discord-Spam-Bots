@@ -7,6 +7,8 @@ intents = discord.Intents.all()
 intents.members = True
 bot = discord.Client(intents=intents)
 
+test_channel_id = 920441829722292274
+
 
 # Greet incoming members
 @bot.event
@@ -93,19 +95,24 @@ async def on_message(msg):
 @bot.event
 async def on_raw_reaction_add(payload):
   user = payload.member
+  guild_id = payload.guild_id
+  channel_id = payload.channel_id
+  msg_id = payload.message_id
+  msg_link = f"https://discord.com/channels/{guild_id}/{channel_id}/{payload.message_id}"
+
+  # When a user reacts to indicate completion of task, the bot responds w/ a link to the msg
   if payload.emoji.name == "✅" and user.name != "mlh-test-bot":
     channel = discord.utils.get(bot.get_all_channels(), id=payload.channel_id)
-    # print(user.name)
     # Slow warn Vincent
     if channel.id == 1077742468965093487 and user.id == 429463598629257227:
       await channel.send(
-        f'¡Ay Dios mio {user.mention}! Slow down speedy Gonzalez!')
+        f'¡Ay Dios mio {user.mention}! Slow down speedy Gonzalez! {msg_link}')
       if random.randint(0, 1) == 1:
         await channel.send(
           "https://gifdb.com/images/high/speedy-gonzales-running-t0uvc86wu0vlqdwv.gif"
         )
-    else:  # Encourage everyone else
-      await channel.send("Nice job, {0}!".format(user.mention))
+    else:
+      await channel.send(f"Nice job, {user.mention}! {msg_link}")
 
 
 # open flask app and call function to keep program running
